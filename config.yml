@@ -1,0 +1,39 @@
+version: '1.0'
+drop-named: false
+wiadomosci:
+  aktywne: true
+  actionbar: true
+  chat: true
+#
+multipliers:
+  1: '2'
+  2: '3'
+  3: '5'
+  4: '6'
+  5: '10'
+# Przy jakich poziomach ma byc wiadomosc dla wszystkich graczy
+level-broadcast:
+  - '5'
+  - '10'
+  - '25'
+  - '32'
+  - '50'
+  - '75'
+  - '100'
+  - '150'
+  - '175'
+  - '181'
+  - '200'
+  - '300'
+  - '500'
+  - '750'
+  - '1000'
+  - '2000'
+  - '5000'
+  - '7500'
+  - '10000'
+# Wiadomosc kiedy gracz awansuje na jeden z powyzszych poziomow
+info:
+  - '§2                       BRAWO!'
+  - '§7   Gracz §6{PLAYER} §7awansowal na poziom'
+  - '§2                        {LEVEL}'
