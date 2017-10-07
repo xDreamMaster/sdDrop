@@ -1,0 +1,232 @@
+xp: '15'
+drops:
+  diax:
+    item: 'diamond'
+    szanse: '3.0%'
+    nazwa: '&bDIAMENT'
+    fortuna: 'tak'
+    xp: '50'
+    wiadomosc: '&8> &bDIAMENTY &8(&6_ILOSC_&8) &8(&6+_PKT_&8)'
+    enderchest: 'tak'
+    uprawnienie: ''
+    narzedzia:
+      - diamond pickaxe
+      - iron pickaxe
+    pkt: 
+      min: '3'
+      max: '5'
+    ilosc:
+      min: '1'
+      max: '3'
+    poziom:
+      min: '0'
+      max: '100'
+  zloto:
+    item: 'gold ore'
+    szanse: '2.7%'
+    nazwa: '&6ZLOTO'
+    fortuna: 'tak'
+    xp: '50'
+    wiadomosc: '&e&lDROP &8> &6ZLOTO &8(&6_ILOSC_&8) &8(&6+_PKT_&8)'
+    enderchest: 'tak'
+    uprawnienie: ''
+    narzedzia:
+      - 'diamond pickaxe'
+      - 'iron pickaxe'
+    pkt: 
+      min: '3'
+      max: '5'
+    ilosc:
+      min: '1'
+      max: '3'
+    poziom:
+      min: '0'
+      max: '100'
+  zelazo:
+    item: 'iron ore'
+    szanse: '3.7%'
+    nazwa: '&8ZELAZO'
+    fortuna: 'tak'
+    xp: '50'
+    wiadomosc: '&e&lDROP &8> &8ZELAZO &8(&6_ILOSC_&8) &8(&6+_PKT_&8)'
+    enderchest: 'tak'
+    uprawnienie: ''
+    narzedzia:
+      - 'diamond pickaxe'
+      - 'iron pickaxe'
+      - 'stone pickaxe'
+    pkt: 
+      min: '3'
+      max: '5'
+    ilosc:
+      min: '1'
+      max: '3'
+    poziom:
+      min: '0'
+      max: '100'
+  wegiel:
+    item: 'coal'
+    szanse: '5%'
+    nazwa: '&0WEGIEL'
+    fortuna: 'tak'
+    xp: '50'
+    wiadomosc: '&e&lDROP &8> &0WEGIEL &8(&6_ILOSC_&8) &8(&6+_PKT_&8)'
+    enderchest: 'tak'
+    uprawnienie: ''
+    narzedzia:
+      - 'diamond pickaxe'
+      - 'iron pickaxe'
+      - 'stone pickaxe'
+      - 'wooden pickaxe'
+    pkt: 
+      min: '2'
+      max: '2'
+    ilosc:
+      min: '1'
+      max: '3'
+    poziom:
+      min: '0'
+      max: '100'
+  szmaragd:
+    item: 'emerald'
+    szanse: '1.5%'
+    nazwa: '&aSZMARAGD'
+    fortuna: 'tak'
+    xp: '50'
+    wiadomosc: '&e&lDROP &8> &aSZMARAGDY &8(&6_ILOSC_&8) &8(&6+_PKT_&8)'
+    enderchest: 'tak'
+    uprawnienie: ''
+    narzedzia:
+      - 'diamond pickaxe'
+      - 'iron pickaxe'
+    pkt: 
+      min: '3'
+      max: '5'
+    ilosc:
+      min: '1'
+      max: '3'
+    poziom:
+      min: '0'
+      max: '100'
+  jablko:
+    item: '260'
+    szanse: '1.2%'
+    nazwa: '&cJABLKO'
+    fortuna: 'tak'
+    xp: '50'
+    wiadomosc: '&e&lDROP &8> &cJABLKA &8(&6_ILOSC_&8) &8(&6+_PKT_&8)'
+    enderchest: 'tak'
+    uprawnienie: ''
+    narzedzia:
+      - 'diamond pickaxe'
+    pkt: 
+      min: '3'
+      max: '5'
+    ilosc:
+      min: '1'
+      max: '3'
+    poziom:
+      min: '30'
+      max: '100'
+  perly:
+    item: 'ender pearl'
+    szanse: '1.7%'
+    nazwa: '&5PERLA'
+    fortuna: 'nie'
+    xp: '50'
+    wiadomosc: '&e&lDROP &8> &5PERLY &8(&6_ILOSC_&8) &8(&6+_PKT_&8)'
+    enderchest: 'nie'
+    uprawnienie: ''
+    narzedzia:
+      - 'diamond pickaxe'
+    pkt: 
+      min: '3'
+      max: '5'
+    ilosc:
+      min: '1'
+      max: '1'
+    poziom:
+      min: '0'
+      max: '100'
+  piasek:
+    item: 'sand'
+    szanse: '3%'
+    nazwa: '&ePIASEK'
+    fortuna: 'nie'
+    xp: '50'
+    wiadomosc: ''
+    enderchest: 'nie'
+    uprawnienie: ''
+    narzedzia:
+      - 'diamond pickaxe'
+    pkt: 
+      min: '1'
+      max: '1'
+    ilosc:
+      min: '1'
+      max: '1'
+    poziom:
+      min: '0'
+      max: '100'
+  ksiazki:
+    item: 'book'
+    szanse: '5%'
+    nazwa: '&eKSIAZKA'
+    fortuna: 'tak'
+    xp: '50'
+    wiadomosc: ''
+    enderchest: 'nie'
+    uprawnienie: ''
+    narzedzia:
+      - 'diamond pickaxe'
+    pkt: 
+      min: '1'
+      max: '1'
+    ilosc:
+      min: '1'
+      max: '2'
+    poziom:
+      min: '0'
+      max: '100'
+  obs:
+    item: 'obsidian'
+    szanse: '5%'
+    nazwa: '&5OBSYDIAN'
+    fortuna: 'nie'
+    xp: '50'
+    wiadomosc: '&8> &5OBSYDIAN &8(&6_ILOSC_&8) &8(&6+_PKT_&8)'
+    enderchest: 'nie'
+    uprawnienie: ''
+    narzedzia:
+      - 'diamond pickaxe'
+    pkt: 
+      min: '3'
+      max: '5'
+    ilosc:
+      min: '1'
+      max: '1'
+    poziom:
+      min: '0'
+      max: '100'
+  lapis:
+    item: 'lapis lazuli'
+    szanse: '3.7%'
+    nazwa: '&3LAPIS'
+    fortuna: 'tak'
+    xp: '50'
+    wiadomosc: '&e&lDROP &8> &3LAPIS &8(&6_ILOSC_&8) &8(&6+_PKT_&8)'
+    enderchest: 'tak'
+    uprawnienie: ''
+    narzedzia:
+      - 'diamond pickaxe'
+      - 'iron pickaxe'
+      - 'stone pickaxe'
+    pkt: 
+      min: '3'
+      max: '5'
+    ilosc:
+      min: '1'
+      max: '3'
+    poziom:
+      min: '0'
+      max: '100'
