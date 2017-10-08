@@ -1,0 +1,60 @@
+rows: 6
+slots:
+  top-slot: 38
+  enderchest-slot: 39
+  cobble-slot: 42
+  turbo-slot: 40
+  close-slot: 49
+  xp-slot: 41
+  empty-slots:
+    - 0
+    - 1
+    - 2
+    - 6
+    - 7
+    - 8
+items:
+  drop-item:
+    name: '_NAZWA_'
+    amount: 1
+    lore:
+      - '&0'
+      - '&0'
+      - '&cWlaczony: &7_STATUS_'
+      - '&0'
+      - '&0'
+      - '&cSzanse: &7_CHANCE_%'
+      - '&cEnderchest: &7_ENDER_'
+      - '&cFortuna: &7_FORTUNE_'
+      - '&cIlosc:'
+      - ' &cMin: &7_MINAMOUNT_'
+      - ' &cMax: &7_MAXAMOUNT_'
+      - '&cPoziom:'
+      - ' &cMin: &7_MINLEVEL_'
+      - ' &cMax: &7_MAXLEVEL_'
+      - '&cPunkty:'
+      - ' &cMin: &7_MINPKT_'
+      - ' &cMax: &7_MAXPKT_'
+      - '&cNarzedzia: &7_TOOLS_'
+      - '&0'
+      - '&0'
+  turbo:
+    name: '&cTurbo:'
+    amount: 1
+    item: 'hopper'
+    lore:
+      - '&0'
+      - '&cAktywny: &7_STATUS_'
+      - '&0'
+      - '&cPoziom: &7_POZIOM_'
+      - '&cCzas: &7_CZAS_'
+      - '&0'
+  top:
+    name: '&cTop kopacze:'
+    amount: 1
+    item: 'diamond pickaxe'
+    lore:
+      - '&7Kliknij po wiecej informacji'
+      - '&cTop 10:'
+      - '&7_TOP_'
+    top-10: '&c> &7_POS_ &c> &7_PLAYER_ &c> &7_SCORE_'
