@@ -6,7 +6,7 @@ drops:
     nazwa: '&bDIAMENT'
     fortuna: 'tak'
     xp: '50'
-    wiadomosc: '&8> &bDIAMENTY &8(&6_ILOSC_&8) &8(&6+_PKT_&8)'
+    wiadomosc: '&7Trafiles na: &cdiamenty &7(_ILOSC_ szt) (+_PKT_)'
     enderchest: 'tak'
     uprawnienie: ''
     narzedzia:
@@ -27,7 +27,7 @@ drops:
     nazwa: '&6ZLOTO'
     fortuna: 'tak'
     xp: '50'
-    wiadomosc: '&e&lDROP &8> &6ZLOTO &8(&6_ILOSC_&8) &8(&6+_PKT_&8)'
+    wiadomosc: '&7Trafiles na: &czloto &7(_ILOSC_ szt) (+_PKT_)'
     enderchest: 'tak'
     uprawnienie: ''
     narzedzia:
@@ -48,7 +48,7 @@ drops:
     nazwa: '&8ZELAZO'
     fortuna: 'tak'
     xp: '50'
-    wiadomosc: '&e&lDROP &8> &8ZELAZO &8(&6_ILOSC_&8) &8(&6+_PKT_&8)'
+    wiadomosc: '&7Trafiles na: &czelazo &7(_ILOSC_ szt) (+_PKT_)'
     enderchest: 'tak'
     uprawnienie: ''
     narzedzia:
@@ -70,7 +70,7 @@ drops:
     nazwa: '&0WEGIEL'
     fortuna: 'tak'
     xp: '50'
-    wiadomosc: '&e&lDROP &8> &0WEGIEL &8(&6_ILOSC_&8) &8(&6+_PKT_&8)'
+    wiadomosc: '&7Trafiles na: &cwegiel &7(_ILOSC_ szt) (+_PKT_)'
     enderchest: 'tak'
     uprawnienie: ''
     narzedzia:
@@ -93,7 +93,7 @@ drops:
     nazwa: '&aSZMARAGD'
     fortuna: 'tak'
     xp: '50'
-    wiadomosc: '&e&lDROP &8> &aSZMARAGDY &8(&6_ILOSC_&8) &8(&6+_PKT_&8)'
+    wiadomosc: '&7Trafiles na: &cszmaragdy &7(_ILOSC_ szt) (+_PKT_)'
     enderchest: 'tak'
     uprawnienie: ''
     narzedzia:
@@ -108,13 +108,36 @@ drops:
     poziom:
       min: '0'
       max: '100'
+  deski:
+    item: '5'
+    szanse: '1.5%'
+    nazwa: '&6DREWNO'
+    fortuna: 'tak'
+    xp: '50'
+    wiadomosc: '&7Trafiles na: &cdrewno &7(_ILOSC_ szt) (+_PKT_)'
+    enderchest: 'tak'
+    uprawnienie: ''
+    narzedzia:
+      - 'diamond pickaxe'
+      - 'iron pickaxe'
+      - 'stone pickaxe'
+      - 'wooden pickaxe'
+    pkt: 
+      min: '3'
+      max: '5'
+    ilosc:
+      min: '1'
+      max: '2'
+    poziom:
+      min: '0'
+      max: '100'
   jablko:
     item: '260'
     szanse: '1.2%'
     nazwa: '&cJABLKO'
     fortuna: 'tak'
     xp: '50'
-    wiadomosc: '&e&lDROP &8> &cJABLKA &8(&6_ILOSC_&8) &8(&6+_PKT_&8)'
+    wiadomosc: '&7Trafiles na: &cjablka &7(_ILOSC_ szt) (+_PKT_)'
     enderchest: 'tak'
     uprawnienie: ''
     narzedzia:
@@ -134,7 +157,7 @@ drops:
     nazwa: '&5PERLA'
     fortuna: 'nie'
     xp: '50'
-    wiadomosc: '&e&lDROP &8> &5PERLY &8(&6_ILOSC_&8) &8(&6+_PKT_&8)'
+    wiadomosc: '&7Trafiles na: &cperly &7(_ILOSC_ szt) (+_PKT_)'
     enderchest: 'nie'
     uprawnienie: ''
     narzedzia:
@@ -194,7 +217,7 @@ drops:
     nazwa: '&5OBSYDIAN'
     fortuna: 'nie'
     xp: '50'
-    wiadomosc: '&8> &5OBSYDIAN &8(&6_ILOSC_&8) &8(&6+_PKT_&8)'
+    wiadomosc: '&7Trafiles na: &cobsydian &7(_ILOSC_ szt) (+_PKT_)'
     enderchest: 'nie'
     uprawnienie: ''
     narzedzia:
@@ -214,7 +237,7 @@ drops:
     nazwa: '&3LAPIS'
     fortuna: 'tak'
     xp: '50'
-    wiadomosc: '&e&lDROP &8> &3LAPIS &8(&6_ILOSC_&8) &8(&6+_PKT_&8)'
+    wiadomosc: '&7Trafiles na: &clapis lazuli &7(_ILOSC_ szt) (+_PKT_)'
     enderchest: 'tak'
     uprawnienie: ''
     narzedzia:
