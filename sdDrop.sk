@@ -1,6 +1,3 @@
-#-------------------------------------------#
-#             YAML + STWONIARKI             #
-#-------------------------------------------#
 aliases:
   cobblestone = 4
 
@@ -112,9 +109,6 @@ on load:
 	set {_qdk2} to yaml value "kolory.dodatki" from file "plugins/sdDrop/config.yml"
 	set {qdk2} to "%colored {_qdk2}%"
 
-#-------------------------------------------#
-#                    GUI                    #
-#-------------------------------------------#
 function qdGUI(g: player):
 	set {_1::*} to yaml nodes "drops" from file "plugins/sdDrop/drops.yml"
 	set {_num} to -1
@@ -245,9 +239,7 @@ command /qtop [<integer=1>]:
 					add 1 to {_i}
 				{_max} is larger than {_num}:
 					set {_r} to {_num}
-#-------------------------------------------#
-#                  RELOAD                   #
-#-------------------------------------------#
+
 function qdReload(p: player):
 	set {_1::*} to yaml nodes "drops" from file "plugins/sdDrop/drops.yml"
 	loop {_1::*}:
@@ -267,7 +259,7 @@ function qdReload(p: player):
 		set {d::pkt::min::%loop-value%} to saveVarN("plugins/sdDrop/drops.yml", "drops.%loop-value%.pkt.min")		
 		set {xp} to saveVarN("plugins/sdDrop/drops.yml", "xp")
 		set {d::narz::%loop-value%::*} to yaml list "drops.%loop-value%.narzedzia" from file "plugins/sdDrop/drops.yml"
-#
+
 function qdPkt(p: player):
 	set {_pkt} to {qd::pkt::%{_p}%}
 	set {_lvl} to {qd::lvl::%{_p}%}
@@ -401,9 +393,7 @@ command /qdadmin [<text>] [<text>] [<integer>] [<integer>]:
 		if arg 1 is "kolor2":
 			if arg 2 is set:
 				set {qdk2} to colored "%arg-2%"
-#-------------------------------------------#
-#               DZIALANIE GUI               #
-#-------------------------------------------#
+
 on inventory click:
 	if inventory name of player's current inventory contains "&cTop wykopanego stone":
 		cancel event
