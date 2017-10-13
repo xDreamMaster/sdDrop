@@ -58,3 +58,22 @@ items:
       - '&cTop 10:'
       - '&7_TOP_'
     top-10: '&c> &7_POS_ &c> &7_PLAYER_ &c> &7_SCORE_'
+  cobble:
+    name: '&cCobblestone'
+    amount: 1
+    lore:
+      - '&0'
+      - '&cAktywny: &7_STATUS_'
+      - '&cSchowek: &7_SCHOWEK_'
+      - '&0'
+      - '&7&oNacisnij &c&oPPM &7&oaby &c&owlaczyc&7/&cwylaczyc &7bruk'
+      - '&7&oNacisnij &c&oLPM &7&oaby &c&owyplacic &7bruk'
+      - '&0'
+  enderchest:
+    name: '&cEnderchest: &7_STATUS_'
+    amount: 1
+    lore:
+      - '&0'
+      - '&7Czy przedmioty maja wpadac'
+      - '&7do skrzyni kresu gdy ekwipunek jest pelny'
+      - '&0'
