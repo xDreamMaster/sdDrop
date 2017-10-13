@@ -83,7 +83,7 @@ on load:
 	if file "plugins/sdDrop/gui.yml" doesn't exist:
 		create file "plugins/sdDrop/gui.yml"
 		wait 2 ticks
-		set {_var::*} to contents from url "https://raw.githubusercontent.com/Quaczi/sdDrop/master/config.yml"
+		set {_var::*} to contents from url "https://raw.githubusercontent.com/Quaczi/sdDrop/master/gui.yml"
 		loop {_var::*}:
 			add 1 to {_line}
 			write "%loop-value%" at line {_line} to file "plugins/sdDrop/gui.yml"
