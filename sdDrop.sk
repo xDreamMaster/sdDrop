@@ -398,7 +398,7 @@ command /qdadmin [<text>] [<text>] [<integer>] [<integer>]:
 				set {qdk2} to colored "%arg-2%"
 
 on inventory click:
-	if inventory name of player's current inventory contains "&cTop wykopanego stone":
+	if inventory name of player's current inventory contains "Top wykopanego stone":
 		cancel event
 		if clicked slot is 53:
 			execute player command "qtop %{strona::%player%} +1%"
