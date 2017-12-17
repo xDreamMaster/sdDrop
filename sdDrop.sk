@@ -73,30 +73,19 @@ function toggle(type: text, g: player):
 		set slot {_es} of {_g}'s current inventory to ender chest named "%{_nc}%" with lore "%{_lc}%"
   
 on load:
-	if file "plugins/sdDrop/config.yml" doesn't exist:
-		create file "plugins/sdDrop/config.yml"
-		wait 2 ticks
-		set {_var::*} to contents from url "https://raw.githubusercontent.com/Quaczi/sdDrop/master/config.yml"
-		loop {_var::*}:
-			if "%loop-value%" is not "" or " ":
+	add "config" to {_files::*}
+	add "gui" to {_files::*}
+	add "drops" to {_files::*}
+	loop {_files::*}:
+		if file "plugins/sdDrop/%loop-value-1%.yml" doesn't exist:
+			create file "plugins/sdDrop/%loop-value-1%.yml"
+			wait 2 ticks
+			set {_var::*} to contents from url "https://raw.githubusercontent.com/Quaczi/sdDrop/master/%loop-value-1%.yml"
+			set {_line} to 0
+			loop {_var::*}:
 				add 1 to {_line}
-				write "%loop-value%" at line {_line} to file "plugins/sdDrop/config.yml"
-	if file "plugins/sdDrop/gui.yml" doesn't exist:
-		create file "plugins/sdDrop/gui.yml"
-		wait 2 ticks
-		set {_var::*} to contents from url "https://raw.githubusercontent.com/Quaczi/sdDrop/master/gui.yml"
-		loop {_var::*}:
-			if "%loop-value%" is not "" or " ":
-				add 1 to {_line}
-				write "%loop-value%" at line {_line} to file "plugins/sdDrop/gui.yml"
-	if file "plugins/sdDrop/drops.yml" doesn't exist:
-		create file "plugins/sdDrop/drops.yml"
-		wait 2 ticks
-		set {_var::*} to contents from url "https://raw.githubusercontent.com/Quaczi/sdDrop/master/drops.yml"
-		loop {_var::*}:
-			if "%loop-value%" is not "" or " ":
-				add 1 to {_line}
-				write "%loop-value%" at line {_line} to file "plugins/sdDrop/drops.yml"
+				write "%loop-value-2%" at line {_line} to file "plugins/sdDrop/%loop-value-1%.yml"
+			send "[sdDrop] Pobieranie ukonczone - %loop-value% - 100%%" to console
 	loop all players:
 		set {turbo::%loop-player%} to "nie"
 		set {_1::*} to yaml nodes "drops" from file "plugins/sdDrop/drops.yml"
