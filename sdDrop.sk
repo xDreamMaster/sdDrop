@@ -1,532 +1,562 @@
-aliases:
-  cobblestone = 4
-
 function repVar(text: text, drop: text, g: player) :: text:
-	replace all "_STATUS_" in {_text} with "%{qd::%{_g}%::%{_drop}%}%"
-	replace all "_ITEM_" in {_text} with "%{d::item::%{_drop}%}%"
-	set {_ch} to {d::sz::%{_drop}%}
-	set {_c2} to {_ch}*100
-	replace all "_CHANCE_" in {_text} with "%{_c2}%"
-	replace all "_FORTUNE_" in {_text} with "%{d::for::%{_drop}%}%"
-	replace all "_NAZWA_" in {_text} with "%{d::n::%{_drop}%}%"
-	replace all "_ENDER_" in {_text} with "%{d::en::%{_drop}%}%"
-	replace all "_MINAMOUNT_" in {_text} with "%{d::imin::%{_drop}%}%"
-	replace all "_MAXAMOUNT_" in {_text} with "%{d::imax::%{_drop}%}%"
-	replace all "_MINLEVEL_" in {_text} with "%{d::pmin::%{_drop}%}%"
-	replace all "_MAXLEVEL_" in {_text} with "%{d::pmax::%{_drop}%}%"
-	replace all "_MINPKT_" in {_text} with "%{d::pkt::min::%{_drop}%}%"
-	replace all "_MAXPKT_" in {_text} with "%{d::pkt::max::%{_drop}%}%"
-	set {_tools} to "|| &7 - %{d::narz::%{_drop}%::*}%"
-	replace all "and" and "," in {_tools} with "|| &7 -"
-	replace all "_TOOLS_" in {_text} with "%{_tools}%"
-	return "%{_text}%"
-	
+    replace all "_STATUS_" in {_text} with "%{qd::%{_g}%::%{_drop}%}%"
+    replace all "_ITEM_" in {_text} with "%{d::item::%{_drop}%}%"
+    set {_ch} to {d::sz::%{_drop}%}
+    set {_c2} to {_ch}*100
+    replace all "_CHANCE_" in {_text} with "%{_c2}%"
+    replace all "_FORTUNE_" in {_text} with "%{d::for::%{_drop}%}%"
+    replace all "_NAZWA_" in {_text} with "%{d::n::%{_drop}%}%"
+    replace all "_ENDER_" in {_text} with "%{d::en::%{_drop}%}%"
+    replace all "_MINAMOUNT_" in {_text} with "%{d::imin::%{_drop}%}%"
+    replace all "_MAXAMOUNT_" in {_text} with "%{d::imax::%{_drop}%}%"
+    replace all "_MINLEVEL_" in {_text} with "%{d::pmin::%{_drop}%}%"
+    replace all "_MAXLEVEL_" in {_text} with "%{d::pmax::%{_drop}%}%"
+    replace all "_MINPKT_" in {_text} with "%{d::pkt::min::%{_drop}%}%"
+    replace all "_MAXPKT_" in {_text} with "%{d::pkt::max::%{_drop}%}%"
+    set {_tools::*} to {d::narz::%{_drop}%::*}
+    loop {_tools::*}:
+        set {_tools::%loop-index%} to colored "&c | &7%loop-value%"
+    set {_toolsr} to colored "%{_tools::*}%"
+    replace all ", " and "and " in {_toolsr} with ""
+    replace all "_TOOLS_" in {_text} with "%{_toolsr}%"
+    return "%{_text}%"
+    
 function saveVarT(dir: text, value: text) :: text:
-	set {_temp} to yaml value "%{_value}%" from file "%{_dir}%"
-	set {_ret} to {_temp} parsed as text
-	return {_ret}
+    set {_temp} to yaml value "%{_value}%" from file "%{_dir}%"
+    set {_ret} to {_temp}
+    return {_ret}
 
 function saveVarN(dir: text, value: text) :: number:
-	set {_temp} to yaml value "%{_value}%" from file "%{_dir}%"
-	set {_ret} to {_temp} parsed as number
-	return {_ret}
-	
+    set {_temp} to yaml value "%{_value}%" from file "%{_dir}%"
+    set {_ret} to {_temp} parsed as number
+    return {_ret}
+    
 
 function repConf(text: text, type: text, g: player) :: text:
-	if {_type} is "turbo":
-		replace all "_STATUS_" in {_text} with "%{turbo::%{_g}%}%"
-		replace all "_POZIOM_" in {_text} with "%{turbolvl::%{_g}%}%"
-		replace all "_CZAS_" in {_text} with "%{lturbo::%{_g}%}%"
-	if {_type} is "cobble":
-		replace all "_STATUS_" in {_text} with "%{qd::%{_g}%::cobble}%"
-		replace all "_SCHOWEK_" in {_text} with "%{qds::%{_g}%}%"
-	if {_type} is "enderchest":
-		replace all "_STATUS_" in {_text} with "%{qdec::%{_g}%}%"
-	return "%{_text}%"
-		
+    if {_type} is "turbo":
+        replace all "_STATUS_" in {_text} with "%{turbo::%{_g}%}%"
+        replace all "_POZIOM_" in {_text} with "%{turbolvl::%{_g}%}%"
+        replace all "_CZAS_" in {_text} with "%{lturbo::%{_g}%}%"
+    if {_type} is "cobble":
+        replace all "_STATUS_" in {_text} with "%{qd::%{_g}%::cobble}%"
+        replace all "_SCHOWEK_" in {_text} with "%{qds::%{_g}%}%"
+    if {_type} is "enderchest":
+        replace all "_STATUS_" in {_text} with "%{qdec::%{_g}%}%"
+    return "%{_text}%"
+        
 function toggle(type: text, g: player):
-	if {_type} is "cobble":
-		if {qd::%{_g}%::cobble} is "TAK":
-			set {qd::%{_g}%::%{_type}%} to "NIE"
-		else:
-			set {qd::%{_g}%::%{_type}%} to "TAK"
-		send "%{qdk1}%Cobblestone: %{qdk2}%%{qd::%{_g}%::%{_type}%}%" to {_g}
-		set {_cobble::*} to yaml list "items.cobble.lore" from file "plugins/sdDrop/gui.yml"
-		set {_lllc} to "%{_cobble::*}%"
-		replace all " and" and ", " in {_lllc} with "||"
-		set {_lc} to colored repConf("%{_lllc}%", "cobble", {_g})
-		set {_nn} to yaml value "items.cobble.name" from file "plugins/sdDrop/gui.yml"
-		set {_nc} to colored repConf("%{_nn}%", "cobble", {_g})
-	if {_type} is "ender":
-		set {_es} to yaml value "slots.enderchest-slot" from file "plugins/sdDrop/gui.yml"
-		if {qdec::%{_g}%} is "TAK":
-			set {qdec::%{_g}%} to "NIE"
-		else:
-			set {qdec::%{_g}%} to "TAK"
-		send "%{qdk1}%Enderchest: %{qdk2}%%{qdec::%{_g}%}%" to {_g}
-		set {_ender::*} to yaml list "items.enderchest.lore" from file "plugins/sdDrop/gui.yml"
-		set {_lllc} to "%{_ender::*}%"
-		replace all " and" and ", " in {_lllc} with "||"
-		set {_lc} to colored repConf("%{_lllc}%", "enderchest", {_g})
-		set {_nn} to yaml value "items.enderchest.name" from file "plugins/sdDrop/gui.yml"
-		set {_nc} to colored repConf("%{_nn}%", "enderchest", {_g})
-		set slot {_es} of {_g}'s current inventory to ender chest named "%{_nc}%" with lore "%{_lc}%"
+    if {_type} is "cobble":
+        set {_cs} to yaml value "slots.cobble-slot" from file "plugins/sdDrop/gui.yml"
+        if {qd::%{_g}%::cobble} is "TAK":
+            set {qd::%{_g}%::%{_type}%} to "NIE"
+        else:
+            set {qd::%{_g}%::%{_type}%} to "TAK"
+        send colored "%{qdk1}%Cobblestone: %{qdk2}%%{qd::%{_g}%::%{_type}%}%" to {_g}
+        set {_cobble::*} to yaml list "items.cobble.lore" from file "plugins/sdDrop/gui.yml"
+        set {_lllc} to "%{_cobble::*}%"
+        replace all " and" and ", " in {_lllc} with "||"
+        set {_lc} to colored repConf("%{_lllc}%", "cobble", {_g})
+        set {_nn} to yaml value "items.cobble.name" from file "plugins/sdDrop/gui.yml"
+        loop {_cobble::*}:
+            set {_cobble::%loop-index%} to colored repConf("%loop-value%", "cobble", {_g})
+        set {_nc} to colored repConf("%{_nn}%", "cobble", {_g})
+        set slot {_cs} of {_g}'s current inventory to cobblestone named "%{_nc}%" with lore colored {_cobble::*}
+    if {_type} is "ender":
+        set {_es} to yaml value "slots.enderchest-slot" from file "plugins/sdDrop/gui.yml"
+        if {qdec::%{_g}%} is "TAK":
+            set {qdec::%{_g}%} to "NIE"
+        else:
+            set {qdec::%{_g}%} to "TAK"
+        send colored "%{qdk1}%Enderchest: %{qdk2}%%{qdec::%{_g}%}%" to {_g}
+        set {_ender::*} to yaml list "items.enderchest.lore" from file "plugins/sdDrop/gui.yml"
+        set {_nn} to yaml value "items.enderchest.name" from file "plugins/sdDrop/gui.yml"
+        set {_nc} to colored repConf("%{_nn}%", "enderchest", {_g})
+        loop {_ender::*}:
+            set {_ender::%loop-index%} to colored repConf("%loop-value%", "enderchest", {_g})
+        set slot {_es} of {_g}'s current inventory to ender chest named "%{_nc}%" with lore colored {_ender::*}
   
 on load:
-	add "config" to {_files::*}
-	add "gui" to {_files::*}
-	add "drops" to {_files::*}
-	loop {_files::*}:
-		if file "plugins/sdDrop/%loop-value-1%.yml" doesn't exist:
-			create file "plugins/sdDrop/%loop-value-1%.yml"
-			wait 2 ticks
-			set {_var::*} to contents from url "https://raw.githubusercontent.com/Quaczi/sdDrop/master/%loop-value-1%.yml"
-			set {_line} to 0
-			loop {_var::*}:
-				add 1 to {_line}
-				write "%loop-value-2%" at line {_line} to file "plugins/sdDrop/%loop-value-1%.yml"
-			send "[sdDrop] Pobieranie ukonczone - %loop-value% - 100%%" to console
-	loop all players:
-		set {turbo::%loop-player%} to "nie"
-		set {_1::*} to yaml nodes "drops" from file "plugins/sdDrop/drops.yml"
-		loop {_1::*}:
-			if {qd::%loop-player%::%loop-value-1%} is not set:
-				set {qd::%loop-player%::%loop-value-1%} to "tak"
-		if {qds::%loop-player%} is not set:
-			set {qds::%loop-player%} to 0
-		if {qdec::%loop-player%} is not set:
-			set {qdec::%loop-player%} to "TAK"
-	set {_qdk1} to yaml value "kolory.glowny" from file "plugins/sdDrop/config.yml"
-	set {qdk1} to "%colored {_qdk1}%"
-	set {_qdk2} to yaml value "kolory.dodatki" from file "plugins/sdDrop/config.yml"
-	set {qdk2} to "%colored {_qdk2}%"
+    if file "plugins/sdDrop/config.yml" doesn't exist:
+        create file "plugins/sdDrop/config.yml"
+        wait 2 ticks
+        set {_var::*} to contents from url "https://raw.githubusercontent.com/Quaczi/sdDrop/master/config.yml"
+        loop {_var::*}:
+            if "%loop-value%" is not "" or " ":
+                add 1 to {_line}
+                write "%loop-value%" at line {_line} to file "plugins/sdDrop/config.yml"
+    if file "plugins/sdDrop/gui.yml" doesn't exist:
+        create file "plugins/sdDrop/gui.yml"
+        wait 2 ticks
+        set {_var::*} to contents from url "https://raw.githubusercontent.com/Quaczi/sdDrop/master/gui.yml"
+        loop {_var::*}:
+            if "%loop-value%" is not "" or " ":
+                add 1 to {_line}
+                write "%loop-value%" at line {_line} to file "plugins/sdDrop/gui.yml"
+    if file "plugins/sdDrop/drops.yml" doesn't exist:
+        create file "plugins/sdDrop/drops.yml"
+        wait 2 ticks
+        set {_var::*} to contents from url "https://raw.githubusercontent.com/Quaczi/sdDrop/master/drops.yml"
+        loop {_var::*}:
+            if "%loop-value%" is not "" or " ":
+                add 1 to {_line}
+                write "%loop-value%" at line {_line} to file "plugins/sdDrop/drops.yml"
+    loop all players:
+        set {turbo::%loop-player%} to "nie"
+        set {_1::*} to yaml nodes "drops" from file "plugins/sdDrop/drops.yml"
+        loop {_1::*}:
+            if {qd::%loop-player%::%loop-value-1%} is not set:
+                set {qd::%loop-player%::%loop-value-1%} to "tak"
+        if {qds::%loop-player%} is not set:
+            set {qds::%loop-player%} to 0
+        if {qdec::%loop-player%} is not set:
+            set {qdec::%loop-player%} to "TAK"
+    set {_qdk1} to yaml value "kolory.glowny" from file "plugins/sdDrop/config.yml"
+    set {qdk1} to "%colored {_qdk1}%"
+    set {_qdk2} to yaml value "kolory.dodatki" from file "plugins/sdDrop/config.yml"
+    set {qdk2} to "%colored {_qdk2}%"
 
 function qdGUI(g: player):
-	set {_1::*} to yaml nodes "drops" from file "plugins/sdDrop/drops.yml"
-	set {_num} to -1
-	loop {_1::*}:
-		if inventory name of {_g}'s current inventory contains "&e&lDROP ZE STONE":
-			add 1 to {_num}
-			set {_emps::*} to yaml list "slots.empty-slots" from file "plugins/sdDrop/gui.yml"
-			loop {_emps::*}:
-				if "%loop-value-2%" is "%{_num}%":
-					add 1 to {_num}
-			set {v::%{_num}%} to loop-value-1
-			set {_narz::%loop-value-1%::*} to {d::narz::%loop-value-1%::*}
-			set {_n::%loop-value-1%} to colored {d::n::%loop-value-1%}
-			set {_mu} to true
-			if {d::upr:%loop-value%} is not "":
-				set {_spr} to true
-			if {_spr} is true:
-				if {_g} has permission "%{d::upr:%loop-value%}%":
-					set {_mu} to true
-				else:
-					set {_mu} to false
-			if {_mu} is false:
-				remove 1 from {_num}
-			else:
-				set {_lore::*} to yaml list "items.drop-item.lore" from file "plugins/sdDrop/gui.yml"
-				set {_lor::*} to colored repVar("%{_lore::*}%", "%loop-value%", {_g})
-				set {_name} to yaml value "items.drop-item.name" from file "plugins/sdDrop/gui.yml"
-				set {_nn} to colored repVar("%{_name}%", "%loop-value%", {_g})
-				set {_lore2} to "%{_lor::*}%"
-				replace all " and" and "," in {_lore2} with "||&7"
-				set slot {_num} of {_g}'s current inventory to 1 of {d::item::%loop-value-1%} named "%{_n::%loop-value-1%}%" with lore "%{_lore2}%"
-			set {_xps} to yaml value "slots.xp-slot" from file "plugins/sdDrop/gui.yml"
-			set {_clss} to yaml value "slots.close-slot" from file "plugins/sdDrop/gui.yml"
-			set {_cobs} to yaml value "slots.cobble-slot" from file "plugins/sdDrop/gui.yml"
-			set {_ts} to yaml value "slots.turbo-slot" from file "plugins/sdDrop/gui.yml"
-			set {_tos} to yaml value "slots.top-slot" from file "plugins/sdDrop/gui.yml"
-			set {_es} to yaml value "slots.enderchest-slot" from file "plugins/sdDrop/gui.yml"
-			set {_cobble::*} to yaml list "items.cobble.lore" from file "plugins/sdDrop/gui.yml"
-			set {_lllc} to "%{_cobble::*}%"
-			replace all " and" and ", " in {_lllc} with "||"
-			set {_lc} to colored repConf("%{_lllc}%", "cobble", {_g})
-			set {_nn} to yaml value "items.cobble.name" from file "plugins/sdDrop/gui.yml"
-			set {_nc} to colored repConf("%{_nn}%", "cobble", {_g})
-			set slot {_clss} of {_g}'s current inventory to red glass pane named "&cZamknij"
-			set slot {_cobs} of {_g}'s current inventory to cobblestone named "%{_nc}%" with lore "%{_lc}%"
-			set slot {_xps} of {_g}'s current inventory to xp bottle named "%{qdk1}%LVL: %{qdk2}%%{qd::lvl::%{_g}%}%" with lore "%{qdk1}%PKT: %{qdk2}%%{qd::pkt::%{_g}%}%||%{qdk1}%Do nastepnego lvl: %{qdk2}%%{qd::wxp::%{_g}%}-{qd::pkt::%{_g}%}%"
-			set {_conf::*} to yaml list "items.top.lore" from file "plugins/sdDrop/gui.yml"
-			set {_lllr} to "%{_conf::*}%"
-			replace all " and" and ", " in {_lllr} with "||"
-			replace all "_TOP_" in {_lllr} with ""
-			set slot {_tos} of {_g}'s current inventory to diamond pickaxe named "%{qdk1}%TOP 10:" with lore "%colored {_lllr}%"
-			set slot {_ts} of {_g}'s current inventory to hopper named "%{qdk1}%Turbo:" with lore "||||        &cLadowanie...||||&0"
-			set {_ender::*} to yaml list "items.enderchest.lore" from file "plugins/sdDrop/gui.yml"
-			set {_lllc} to "%{_ender::*}%"
-			replace all " and" and ", " in {_lllc} with "||"
-			set {_lc} to colored repConf("%{_lllc}%", "enderchest", {_g})
-			set {_nn} to yaml value "items.enderchest.name" from file "plugins/sdDrop/gui.yml"
-			set {_nc} to colored repConf("%{_nn}%", "enderchest", {_g})
-			set slot {_es} of {_g}'s current inventory to ender chest named "%{_nc}%" with lore "%{_lc}%"
+    set {_1::*} to yaml nodes "drops" from file "plugins/sdDrop/drops.yml"
+    set {_num} to -1
+    loop {_1::*}:
+        if 1 is 1:
+            add 1 to {_num}
+            set {_emps::*} to yaml list "slots.empty-slots" from file "plugins/sdDrop/gui.yml"
+            loop {_emps::*}:
+                if "%loop-value-2%" is "%{_num}%":
+                    add 1 to {_num}
+            set {v::%{_num}%} to loop-value-1
+            set {_narz::%loop-value-1%::*} to {d::narz::%loop-value-1%::*}
+            set {_n::%loop-value-1%} to colored {d::n::%loop-value-1%}
+            set {_mu} to true
+            if {d::upr:%loop-value%} is not "":
+                set {_spr} to true
+            if {_spr} is true:
+                if {_g} has permission "%{d::upr:%loop-value%}%":
+                    set {_mu} to true
+                else:
+                    set {_mu} to false
+            if {_mu} is false:
+                remove 1 from {_num}
+            else:
+                set {_lore::*} to yaml list "items.drop-item.lore" from file "plugins/sdDrop/gui.yml"
+                set {_lor::*} to colored repVar("%{_lore::*}%", "%loop-value%", {_g})
+                loop {_lore::*}:
+                    set {_lore::%loop-index-2%} to colored repVar("%loop-value-2%", "%loop-value-1%", {_g})
+                set {_name} to yaml value "items.drop-item.name" from file "plugins/sdDrop/gui.yml"
+                set {_nn} to colored repVar("%{_name}%", "%loop-value%", {_g})
+                set slot {_num} of {_g}'s current inventory to 1 of {d::item::%loop-value-1%} named "%{_n::%loop-value-1%}%" with lore colored {_lore::*}
+            set {_xps} to yaml value "slots.xp-slot" from file "plugins/sdDrop/gui.yml"
+            set {_clss} to yaml value "slots.close-slot" from file "plugins/sdDrop/gui.yml"
+            set {_cobs} to yaml value "slots.cobble-slot" from file "plugins/sdDrop/gui.yml"
+            set {_ts} to yaml value "slots.turbo-slot" from file "plugins/sdDrop/gui.yml"
+            set {_tos} to yaml value "slots.top-slot" from file "plugins/sdDrop/gui.yml"
+            set {_es} to yaml value "slots.enderchest-slot" from file "plugins/sdDrop/gui.yml"
+            set {_cobble::*} to yaml list "items.cobble.lore" from file "plugins/sdDrop/gui.yml"
+            loop {_cobble::*}:
+                set {_cobble::%loop-index-2%} to colored repConf("%loop-value-2%", "cobble", {_g})
+            set {_nn} to yaml value "items.cobble.name" from file "plugins/sdDrop/gui.yml"
+            set {_nc} to colored repConf("%{_nn}%", "cobble", {_g})
+            set slot {_clss} of {_g}'s current inventory to red glass pane named "&cZamknij"
+            set slot {_cobs} of {_g}'s current inventory to cobblestone named "%{_nc}%" with lore colored {_cobble::*}
+            set {_xplr::*} to "%{qdk1}%PKT: %{qdk2}%%{qd::pkt::%{_g}%}%" and "%{qdk1}%Do nastepnego lvl: %{qdk2}%%{qd::wxp::%{_g}%}-{qd::pkt::%{_g}%}%"
+            set slot {_xps} of {_g}'s current inventory to xp bottle named "%{qdk1}%LVL: %{qdk2}%%{qd::lvl::%{_g}%}%" with lore colored {_xplr::*}
+            set {_conf::*} to yaml list "items.top.lore" from file "plugins/sdDrop/gui.yml"
+            loop {_conf::*}:
+                replace all  "_TOP_" in {_conf::%loop-index-2%} with ""
+            set slot {_tos} of {_g}'s current inventory to diamond pickaxe named "%{qdk1}%TOP 10:" with lore colored {_conf::*}
+            set slot {_ts} of {_g}'s current inventory to hopper named "%{qdk1}%Turbo:" with lore "        &cLadowanie...&0"
+            set {_ender::*} to yaml list "items.enderchest.lore" from file "plugins/sdDrop/gui.yml"
+            loop {_ender::*}:
+                set {_ender::%loop-index-2%} to colored repConf("%loop-value-2%", "enderchest", {_g})
+            set {_nn} to yaml value "items.enderchest.name" from file "plugins/sdDrop/gui.yml"
+            set {_nc} to colored repConf("%{_nn}%", "enderchest", {_g})
+            set slot {_es} of {_g}'s current inventory to ender chest named "%colored {_nc}%" with lore colored {_ender::*}
 
 function qdTop(g: player):
-	set {_conf::*} to yaml list "items.top.lore" from file "plugins/sdDrop/gui.yml"
-	set {_wzoor} to yaml value "items.top.top-10" from file "plugins/sdDrop/gui.yml"
-	set {_lorr} to "%{_conf::*}%"
-	replace all "and" and "," in {_lorr} with "||"
-	loop {_conf::*}:
-		if "%loop-value%" contains "_TOP_":
-			exit loop
-		else:
-			add 1 to {_linia}
-	set {_num} to size of {qdws::*}
-	loop {_num} times:
-		loop {qdws::*}:
-			{_v.%loop-number%} is not set:
-				set {_v.%loop-number%} to loop-value-2
-				set {_n.%loop-number%} to loop-index
-			loop-value-2 is greater than {_v.%loop-number%}:
-				set {_v.%loop-number%} to loop-value-2
-				set {_n.%loop-number%} to loop-index
-		remove {_v.%loop-number%} from {qdws::*}
-	loop {_num} times:
-		loop-number is less than or equal to 10:
-			add 1 to {_linia}
-			set {_lin} to "%colored {_wzoor}%"
-			replace all "_POS_" in {_lin} with "%loop-number%"
-			replace all "_SCORE_" in {_lin} with "%{_v.%loop-number%}%"
-			replace all "_PLAYER_" in {_lin} with "%{_n.%loop-number%}%"
-			set {_tos} to yaml value "slots.top-slot" from file "plugins/sdDrop/gui.yml"
-			set line {_linia} of lore of slot {_tos} of {_g}'s current inventory to "%{_lin}%"
-		set {qdws::%{_n.%loop-number%}%} to {_v.%loop-number%}
+    set {_conf::*} to yaml list "items.top.lore" from file "plugins/sdDrop/gui.yml"
+    set {_wzoor} to yaml value "items.top.top-10" from file "plugins/sdDrop/gui.yml"
+    set {_lorr} to "%{_conf::*}%"
+    replace all "and" and "," in {_lorr} with "||"
+    loop {_conf::*}:
+        if "%loop-value%" contains "_TOP_":
+            exit loop
+        else:
+            add 1 to {_linia}
+    set {_num} to size of {qdws::*}
+    loop {_num} times:
+        loop {qdws::*}:
+            {_v.%loop-number%} is not set:
+                set {_v.%loop-number%} to loop-value-2
+                set {_n.%loop-number%} to loop-index
+            loop-value-2 is greater than {_v.%loop-number%}:
+                set {_v.%loop-number%} to loop-value-2
+                set {_n.%loop-number%} to loop-index
+        remove {_v.%loop-number%} from {qdws::*}
+    loop {_num} times:
+        loop-number is less than or equal to 10:
+            add 1 to {_linia}
+            set {_lin} to "%colored {_wzoor}%"
+            replace all "_POS_" in {_lin} with "%loop-number%"
+            replace all "_SCORE_" in {_lin} with "%{_v.%loop-number%}%"
+            replace all "_PLAYER_" in {_lin} with "%{_n.%loop-number%}%"
+            set {_tos} to yaml value "slots.top-slot" from file "plugins/sdDrop/gui.yml"
+            set line {_linia} of lore of slot {_tos} of {_g}'s current inventory to "%{_lin}%"
+        set {qdws::%{_n.%loop-number%}%} to {_v.%loop-number%}
 
 command /qtop [<integer=1>]:
-	trigger:
-		set {_strony} to rounded up (size of {qdws::*} / 54)
-		if arg is between 1 and {_strony}:
-			wait 2 tick
-			open chest with 6 rows named "&6Top wykopanego stone &8(&3%arg%&8)" to player
-			set {strona::%player%} to arg
-			wait 2 tick
-			loop {qdws::*}:
-				set {_lista::%loop-index%} to loop-value
-			set {_num} to size of {_lista::*}
-			set {_max} to arg * 53
-			set {_min} to {_max}-52
-			loop {_max} times:
-				loop {_lista::*}:
-					if {_v.%loop-number%} is not set:
-						set {_v.%loop-number%} to loop-value-2
-						set {_n.%loop-number%} to loop-index
-					if loop-value-2 is larger than {_v.%loop-number%}:
-						set {_v.%loop-number%} to loop-value-2
-						set {_n.%loop-number%} to loop-index
-				delete {_lista::%{_n.%loop-number%}%}
-			set {_i} to 0
-			if (arg + 1) is larger than {_strony}:
-				set player's current inventory's slot 53 to nether star named "&6Koniec" with lore "&cNie ma juz wiecej stron."
-			else:
-				set player's current inventory's slot 53 to nether star named "&6Nastepna Strona" with lore "&6Przejdz na strone: &c%arg + 1%"
-			loop {_max} times:
-				loop-number is between {_min} and {_max}
-				loop-number <= {_num}:
-					if "%{_n.%loop-number%}%" is "%player%":
-						if inventory name of player's current inventory contains "&6Top wykopanego stone":
-							set player's current inventory's slot {_i} to diamond pickaxe named "&6Miejsce: &c&l%loop-number%" with lore "&aNazwa: &6%{_n.%loop-number%}%||&aWykopany kamien: &6%{_v.%loop-number%}%||&aPoziom: &6%{qd::lvl::%{_n.%loop-number%}%}%||&aPunkty: &6%{qd::pkt::%{_n.%loop-number%}%}%"
-					else:
-						if inventory name of player's current inventory contains "&6Top wykopanego stone":
-							set player's current inventory's slot {_i} to stone pickaxe named "&6Miejsce: &c&l%loop-number%" with lore "&aNazwa: &6%{_n.%loop-number%}%||&aWykopany kamien: &6%{_v.%loop-number%}%||&aPoziom: &6%{qd::lvl::%{_n.%loop-number%}%}%||&aPunkty: &6%{qd::pkt::%{_n.%loop-number%}%}%"
-					add 1 to {_i}
-				{_max} is larger than {_num}:
-					set {_r} to {_num}
+    trigger:
+        set {_strony} to rounded up (size of {qdws::*} / 54)
+        if arg is between 1 and {_strony}:
+            wait 2 tick
+            open chest with 6 rows named "&6Top wykopanego stone &8(&3%arg%&8)" to player
+            set {strona::%player%} to arg
+            wait 2 tick
+            loop {qdws::*}:
+                set {_lista::%loop-index%} to loop-value
+            set {_num} to size of {_lista::*}
+            set {_max} to arg * 53
+            set {_min} to {_max}-52
+            loop {_max} times:
+                loop {_lista::*}:
+                    if {_v.%loop-number%} is not set:
+                        set {_v.%loop-number%} to loop-value-2
+                        set {_n.%loop-number%} to loop-index
+                    if loop-value-2 is larger than {_v.%loop-number%}:
+                        set {_v.%loop-number%} to loop-value-2
+                        set {_n.%loop-number%} to loop-index
+                delete {_lista::%{_n.%loop-number%}%}
+            set {_i} to 0
+            if (arg + 1) is larger than {_strony}:
+                set player's current inventory's slot 53 to nether star named "&6Koniec" with lore "&cNie ma juz wiecej stron."
+            else:
+                set player's current inventory's slot 53 to nether star named "&6Nastepna Strona" with lore "&6Przejdz na strone: &c%arg + 1%"
+            loop {_max} times:
+                loop-number is between {_min} and {_max}
+                loop-number <= {_num}:
+                    set {_tlorep::*} to "&aNazwa: &6%{_n.%loop-number%}%", "&aWykopany kamien: &6%{_v.%loop-number%}%", "&aPoziom: &6%{qd::lvl::%{_n.%loop-number%}%}%" and "&aPunkty: &6%{qd::pkt::%{_n.%loop-number%}%}%"
+                    if "%{_n.%loop-number%}%" is "%player%":
+                        set player's current inventory's slot {_i} to diamond pickaxe named "&6Miejsce: &c&l%loop-number%" with lore colored {_tlorep::*}
+                    else:
+                        set player's current inventory's slot {_i} to stone pickaxe named "&6Miejsce: &c&l%loop-number%" with lore colored {_tlorep::*}
+                    add 1 to {_i}
+                {_max} is larger than {_num}:
+                    set {_r} to {_num}
 
 function qdReload(p: player):
-	set {_1::*} to yaml nodes "drops" from file "plugins/sdDrop/drops.yml"
-	loop {_1::*}:
-		set {d::item::%loop-value%} to saveVarT("plugins/sdDrop/drops.yml", "drops.%loop-value%.item") parsed as item
-		set {d::xp::%loop-value%} to saveVarN("plugins/sdDrop/drops.yml", "drops.%loop-value%.xp")
-		set {d::n::%loop-value%} to yaml value "drops.%loop-value%.nazwa" from file "plugins/sdDrop/drops.yml"		
-		set {d::for::%loop-value%} to yaml value "drops.%loop-value%.fortuna" from file "plugins/sdDrop/drops.yml"		
-		set {d::en::%loop-value%} to yaml value "drops.%loop-value%.enderchest" from file "plugins/sdDrop/drops.yml"		
-		set {d::upr::%loop-value%} to yaml value "drops.%loop-value%.uprawnienie" from file "plugins/sdDrop/drops.yml"		
-		set {d::wiad::%loop-value%} to colored saveVarT("plugins/sdDrop/drops.yml", "drops.%loop-value%.wiadomosc")
-		set {d::imin::%loop-value%} to saveVarN("plugins/sdDrop/drops.yml", "drops.%loop-value%.ilosc.min")	
-		set {d::imax::%loop-value%} to saveVarN("plugins/sdDrop/drops.yml", "drops.%loop-value%.ilosc.max")		
-		set {d::pmin::%loop-value%} to saveVarN("plugins/sdDrop/drops.yml", "drops.%loop-value%.poziom.min")		
-		set {d::pmax::%loop-value%} to saveVarN("plugins/sdDrop/drops.yml", "drops.%loop-value%.poziom.max")			
-		set {d::sz::%loop-value%} to saveVarN("plugins/sdDrop/drops.yml", "drops.%loop-value%.szanse")	
-		set {d::pkt::max::%loop-value%} to saveVarN("plugins/sdDrop/drops.yml", "drops.%loop-value%.pkt.max")	
-		set {d::pkt::min::%loop-value%} to saveVarN("plugins/sdDrop/drops.yml", "drops.%loop-value%.pkt.min")		
-		set {xp} to saveVarN("plugins/sdDrop/drops.yml", "xp")
-		set {d::narz::%loop-value%::*} to yaml list "drops.%loop-value%.narzedzia" from file "plugins/sdDrop/drops.yml"
+    set {_1::*} to yaml nodes "drops" from file "plugins/sdDrop/drops.yml"
+    loop {_1::*}:
+        set {d::item::%loop-value%} to saveVarT("plugins/sdDrop/drops.yml", "drops.%loop-value%.item") parsed as item
+        set {d::xp::%loop-value%} to saveVarN("plugins/sdDrop/drops.yml", "drops.%loop-value%.xp")
+        set {d::n::%loop-value%} to yaml value "drops.%loop-value%.nazwa" from file "plugins/sdDrop/drops.yml"        
+        set {d::for::%loop-value%} to yaml value "drops.%loop-value%.fortuna" from file "plugins/sdDrop/drops.yml"        
+        set {d::en::%loop-value%} to yaml value "drops.%loop-value%.enderchest" from file "plugins/sdDrop/drops.yml"        
+        set {d::upr::%loop-value%} to yaml value "drops.%loop-value%.uprawnienie" from file "plugins/sdDrop/drops.yml"        
+        set {d::wiad::%loop-value%} to colored saveVarT("plugins/sdDrop/drops.yml", "drops.%loop-value%.wiadomosc")
+        set {d::imin::%loop-value%} to saveVarN("plugins/sdDrop/drops.yml", "drops.%loop-value%.ilosc.min")    
+        set {d::imax::%loop-value%} to saveVarN("plugins/sdDrop/drops.yml", "drops.%loop-value%.ilosc.max")        
+        set {d::pmin::%loop-value%} to saveVarN("plugins/sdDrop/drops.yml", "drops.%loop-value%.poziom.min")        
+        set {d::pmax::%loop-value%} to saveVarN("plugins/sdDrop/drops.yml", "drops.%loop-value%.poziom.max")            
+        set {d::sz::%loop-value%} to saveVarN("plugins/sdDrop/drops.yml", "drops.%loop-value%.szanse")    
+        set {d::pkt::max::%loop-value%} to saveVarN("plugins/sdDrop/drops.yml", "drops.%loop-value%.pkt.max")    
+        set {d::pkt::min::%loop-value%} to saveVarN("plugins/sdDrop/drops.yml", "drops.%loop-value%.pkt.min")        
+        set {xp} to saveVarN("plugins/sdDrop/drops.yml", "xp")
+        set {d::narz::%loop-value%::*} to yaml list "drops.%loop-value%.narzedzia" from file "plugins/sdDrop/drops.yml"
 
 function qdPkt(p: player):
-	set {_pkt} to {qd::pkt::%{_p}%}
-	set {_lvl} to {qd::lvl::%{_p}%}
-	if {qd::lvl::%{_p}%} is not set:
-		set {qd::lvl::%{_p}%} to 1
-	else:
-		set {qd::wxp::%{_p}%} to "%(({qd::lvl::%{_p}%}*2 +50)*2)+50%" parsed as integer
-		if {_pkt} is bigger or equal to {qd::wxp::%{_p}%}:
-			add 1 to {qd::lvl::%{_p}%}
-			set {qd::pkt::%{_p}%} to 0
-			set {qd::wxp::%{_p}%} to "%(({qd::lvl::%{_p}%}*2 +50)*2)+50%" parsed as integer
-			send "&6> &eBRAWO! &7Awansowales na poziom &e%{qd::lvl::%{_p}%}%&e." to {_p}
-	set {_lvl::*} to yaml list "level-broadcast" from file "plugins/sdDrop/config.yml"
-	loop {_lvl::*}:
-		if "%{qd::lvl::%{_p}%}%" is "%loop-value%":
-			if "%{qdl::%{_p}%}%" is not "%loop-value%":
-				set {_info::*} to yaml list "info" from file "plugins/sdDrop/config.yml"
-				loop {_info::*}:
-					set {_bc} to loop-value-2
-					replace all "{PLAYER}" in {_bc} with "%{_p}%"
-					replace all "{LEVEL}" in {_bc} with "%loop-value-1%"
-					broadcast "%colored {_bc}%"
-				set {qdl::%{_p}%} to loop-value
+    set {_pkt} to {qd::pkt::%{_p}%}
+    set {_lvl} to {qd::lvl::%{_p}%}
+    if {qd::lvl::%{_p}%} is not set:
+        set {qd::lvl::%{_p}%} to 1
+    else:
+        set {qd::wxp::%{_p}%} to "%(({qd::lvl::%{_p}%}*2 +50)*2)+50%" parsed as integer
+        if {_pkt} is bigger or equal to {qd::wxp::%{_p}%}:
+            add 1 to {qd::lvl::%{_p}%}
+            set {qd::pkt::%{_p}%} to 0
+            set {qd::wxp::%{_p}%} to "%(({qd::lvl::%{_p}%}*2 +50)*2)+50%" parsed as integer
+            send "&6> &eBRAWO! &7Awansowales na poziom &e%{qd::lvl::%{_p}%}%&e." to {_p}
+    set {_lvl::*} to yaml list "level-broadcast" from file "plugins/sdDrop/config.yml"
+    loop {_lvl::*}:
+        if "%{qd::lvl::%{_p}%}%" is "%loop-value%":
+            if "%{qdl::%{_p}%}%" is not "%loop-value%":
+                set {_info::*} to yaml list "info" from file "plugins/sdDrop/config.yml"
+                loop {_info::*}:
+                    set {_bc} to loop-value-2
+                    replace all "{PLAYER}" in {_bc} with "%{_p}%"
+                    replace all "{LEVEL}" in {_bc} with "%loop-value-1%"
+                    broadcast "%colored {_bc}%"
+                set {qdl::%{_p}%} to loop-value
 
 command /qdrop [<text>]:
-	aliases: drop, stone, kamien
-	trigger:
-		qdReload(player)
-		qdPkt(player)
-		if arg-1 is not set:
-			open chest with 1 row to player
-			close player's inventory
-			set {_rows} to yaml value "rows" from file "plugins/sdDrop/gui.yml"
-			open chest with {_rows} rows named "         &e&lDROP ZE STONE" to player
-			qdGUI(player)
-		if arg-1 is set:
-			if arg-1 is not "cobble" or "ender" or "top" or "wiad":
-				if arg-1 is not "pkt":
-					set {_nn} to yaml value "drops.%arg-1%.nazwa" from file "plugins/sdDrop/drops.yml"
-					set {_n} to "%colored {_nn}%"
-					if {qd::%player%::%arg-1%} is "TAK":
-						set {qd::%player%::%arg-1%} to "NIE"
-						send "&cWylaczyles drop %{qdk2}%%{_n}%"
-						qdGUI(player)
-						stop
-					else:
-						set {qd::%player%::%arg-1%} to "TAK"
-						send "&aWlaczyles drop %{qdk2}%%{_n}%"
-						qdGUI(player)
-						stop
-				else:
-					send "&aTwoje punkty: %{qdk2}%%{qd::pkt::%player%}%"
-			else:
-				if inventory name of player's current inventory contains "&e&lDROP ZE STONE":
-					if arg 1 is "cobble":
-						toggle("cobble", player)
-						stop
-					if arg 1 is "ender":
-						toggle("ender", player)
-						stop
+    aliases: drop, stone, kamien
+    trigger:
+        qdReload(player)
+        qdPkt(player)
+        if arg-1 is not set:
+            open chest with 1 row to player
+            close player's inventory
+            set {_rows} to yaml value "rows" from file "plugins/sdDrop/gui.yml"
+            open chest with {_rows} rows named "         &e&lDROP ZE STONE" to player
+            qdGUI(player)
+        if arg-1 is set:
+            if arg-1 is not "cobble" or "ender" or "top" or "wiad":
+                if arg-1 is not "pkt":
+                    set {_nn} to yaml value "drops.%arg-1%.nazwa" from file "plugins/sdDrop/drops.yml"
+                    set {_n} to "%colored {_nn}%"
+                    if {qd::%player%::%arg-1%} is "TAK":
+                        set {qd::%player%::%arg-1%} to "NIE"
+                        send "&cWylaczyles drop %{qdk2}%%{_n}%"
+                        qdGUI(player)
+                        stop
+                    else:
+                        set {qd::%player%::%arg-1%} to "TAK"
+                        send "&aWlaczyles drop %{qdk2}%%{_n}%"
+                        qdGUI(player)
+                        stop
+                else:
+                    send "&aTwoje punkty: %{qdk2}%%{qd::pkt::%player%}%"
+            else:
+                if arg 1 is "cobble":
+                    toggle("cobble", player)
+                    stop
+                if arg 1 is "ender":
+                    toggle("ender", player)
+                    stop
 
 on inventory open:
-	wait a tick
-	qdTop(player)
-	wait 3 ticks
-	while inventory name of player's current inventory contains "&e&lDROP ZE STONE":
-		wait a second
-		set {_lore::*} to yaml list "items.turbo.lore" from file "plugins/sdDrop/gui.yml"
-		set {_lor::*} to colored repConf("%{_lore::*}%", "turbo", player)
-		set {_name} to yaml value "items.turbo.name" from file "plugins/sdDrop/gui.yml"
-		set {_nn} to colored repConf("%{_name}%", "turbo", player)
-		set {_lore2} to "%{_lor::*}%"
-		replace all " and" and "," in {_lore2} with "||&7"
-		set {_slot} to yaml value "slots.turbo-slot" from file "plugins/sdDrop/gui.yml"
-		set {_itk2} to yaml value "items.turbo.item" from file "plugins/sdDrop/gui.yml"
-		set {_itk} to {_itk2} parsed as item
-		set {_ts} to yaml value "slots.turbo-slot" from file "plugins/sdDrop/gui.yml"
-		if {lturbo::%player%} is bigger than 0:
-			set {_e} to true
-		if {lexp} is bigger than 0:
-			set {_e} to true
-		if {_e} is true:
-			if inventory name of player's current inventory contains "&e&lDROP ZE STONE":
-				set {_eitk} to {_itk}
-				enchant {_eitk} with fortune 10
-				set slot {_ts} of player's current inventory to {_eitk} named "%{_nn}%" with lore "%{_lore2}%"
-		else:
-			if inventory name of player's current inventory contains "&e&lDROP ZE STONE":
-				set slot {_ts} of player's current inventory to {_itk} named "%{_nn}%" with lore "%{_lore2}%"
-		if inventory name of player's current inventory contains "&e&lDROP ZE STONE":
-			qdTop(player)
+    wait a tick
+    qdTop(player)
+    wait 3 ticks
+    set {_slotcl} to yaml value "slots.close-slot" from file "plugins/sdDrop/gui.yml"
+    while slot {_slotcl} of player's current inventory is red glass pane named "&cZamknij":
+        wait a second
+        set {_lore::*} to yaml list "items.turbo.lore" from file "plugins/sdDrop/gui.yml"
+        set {_lor::*} to colored repConf("%{_lore::*}%", "turbo", player)
+        set {_name} to yaml value "items.turbo.name" from file "plugins/sdDrop/gui.yml"
+        set {_nn} to colored repConf("%{_name}%", "turbo", player)
+        set {_lore2} to "%{_lor::*}%"
+        replace all " and" and "," in {_lore2} with "||&7"
+        loop {_lore::*}:
+            set {_lore::%loop-index%} to colored repConf("%loop-value%", "turbo", player)
+        set {_itk2} to yaml value "items.turbo.item" from file "plugins/sdDrop/gui.yml"
+        set {_itk} to {_itk2} parsed as item
+        set {_ts} to yaml value "slots.turbo-slot" from file "plugins/sdDrop/gui.yml"
+        if {lturbo::%player%} is bigger than 0:
+            set {_e} to true
+        if {lexp} is bigger than 0:
+            set {_e} to true
+        if {_e} is true:
+            if slot {_slotcl} of player's current inventory is red glass pane named "&cZamknij":
+                set {_eitk} to {_itk}
+                enchant {_eitk} with fortune 10
+                set slot {_ts} of player's current inventory to {_eitk} named "%{_nn}%" with lore colored {_lore::*}
+        else:
+            if slot {_slotcl} of player's current inventory is red glass pane named "&cZamknij":
+                set slot {_ts} of player's current inventory to {_itk} named "%{_nn}%" with lore "%{_lore2}%"
+        if slot {_slotcl} of player's current inventory is red glass pane named "&cZamknij":
+            qdTop(player)
 
 command /qdadmin [<text>] [<text>] [<integer>] [<integer>]:
-	permission: qdrop.admin
-	permission message: &cNie masz uprawnien&8.
-	trigger:
-		if arg 1 is not set:
-			send "%{qdk2}%/%{qdk1}%qdadmin turbo %{qdk2}%[&8drop%{qdk2}%/&8exp%{qdk2}%] %{qdk2}%[&8sekundy%{qdk2}%]"
-			send "%{qdk2}%/%{qdk1}%qdadmin wylacz"
-			send "%{qdk2}%/%{qdk1}%qdadmin wlacz"
-			send "%{qdk2}%/%{qdk1}%qdadmin reload"
-			send "%{qdk2}%/%{qdk1}%qdadmin pkt %{qdk2}%[&8gracz%{qdk2}%] %{qdk2}%[&8punkty%{qdk2}%]"
-		if arg 1 is "reload":
-			qdReload(player)
-		if arg 1 is "turbo":
-			if arg 2 is set:
-				if arg 3 is set:
-					if {turbo::%arg-2%} is not "tak":
-						set {turbo::%arg-2%} to "tak"
-						set {lturbo::%arg-2%} to arg-4
-						set {turbolvl::%arg-2%} to arg-3
-						set {_t} to yaml value "multipliers.%{turbolvl::%arg-2%}%" from file "plugins/sdDrop/config.yml"
-						send "&8> &aDostales turbo drop od &c%player%" to (arg-2 parsed as offline player)
-						send "&8> &aAktualny drop: &6%{_t}%&8x" to (arg-2 parsed as offline player)
-						loop arg-4 times:
-							wait a second
-							remove 1 from {lturbo::%arg-2%}
-							if {lturbo::%arg-2%} is less than 1:
-								set {lturbo} to 0
-						set {turbo::%arg-2%} to "nie"
-						set {turbolvl::%arg-2%} to 0
-				else:
-					send "&cTen gracz ma juz turbo drop &4&l(&r&8%{lturbo::%arg-2%}% sekund&4&l)"
-		if arg 1 is "xpr":
-			if arg 2 is set:
-				set {qd::lvl::%arg-2%} to 1
-				set {qd::pkt::%arg-2%} to 0
-		if arg 1 is "kolor1":
-			if arg 2 is set:
-				set {qdk1} to colored "%arg-2%"
-		if arg 1 is "kolor2":
-			if arg 2 is set:
-				set {qdk2} to colored "%arg-2%"
+    permission: qdrop.admin
+    permission message: &cNie masz uprawnien&8.
+    trigger:
+        if arg 1 is not set:
+            send "%{qdk2}%/%{qdk1}%qdadmin turbo %{qdk2}%[&8drop%{qdk2}%/&8exp%{qdk2}%] %{qdk2}%[&8sekundy%{qdk2}%]"
+            send "%{qdk2}%/%{qdk1}%qdadmin wylacz"
+            send "%{qdk2}%/%{qdk1}%qdadmin wlacz"
+            send "%{qdk2}%/%{qdk1}%qdadmin reload"
+            send "%{qdk2}%/%{qdk1}%qdadmin pkt %{qdk2}%[&8gracz%{qdk2}%] %{qdk2}%[&8punkty%{qdk2}%]"
+        if arg 1 is "reload":
+            qdReload(player)
+            loop all players:
+                if {qd::%loop-player%::cobble} is not set:
+                    set {qd::%loop-player%::cobble} to "NIE"
+        if arg 1 is "turbo":
+            if arg 2 is set:
+                if arg 3 is set:
+                    set {_fromT} to "%player%"
+                    if arg 2 is "all":
+                        loop all players:
+                            execute console command "qdadmin turbo %loop-player% %arg-3% %arg-4%"
+                    if {turbo::%arg-2%} is not "tak":
+                        add arg-2 to {turboPlayers::*}
+                        set {turbo::%arg-2%} to "tak"
+                        set {lturbo::%arg-2%} to arg-4
+                        set {turbolvl::%arg-2%} to arg-3
+                        set {_t} to yaml value "multipliers.%{turbolvl::%arg-2%}%" from file "plugins/sdDrop/config.yml"
+                        send "&8> &aDostales turbo drop od &c%{_fromT}%" to (arg-2 parsed as offline player)
+                        send "&8> &aAktualny drop: &6%{_t}%&8x" to (arg-2 parsed as offline player)
+                else:
+                    send "&cTen gracz ma juz turbo drop &4&l(&r&8%{lturbo::%arg-2%}% sekund&4&l)"
+        if arg 1 is "xpr":
+            if arg 2 is set:
+                set {qd::lvl::%arg-2%} to 1
+                set {qd::pkt::%arg-2%} to 0
+        if arg 1 is "kolor1":
+            if arg 2 is set:
+                set {qdk1} to colored "%arg-2%"
+        if arg 1 is "kolor2":
+            if arg 2 is set:
+                set {qdk2} to colored "%arg-2%"
+
+every second:
+    loop {turboPlayers::*}:
+        remove 1 from {lturbo::%loop-value%}
+        if {lturbo::%loop-value%} is less than 1:
+            set {lturbo} to 0
+            set {turbo::%loop-value%} to "nie"
+            set {turbolvl::%loop-value%} to 0
+            remove loop-value from {turboPlayers::*}
+
 
 on inventory click:
-	if inventory name of player's current inventory contains "Top wykopanego stone":
-		cancel event
-		if clicked slot is 53:
-			execute player command "qtop %{strona::%player%} +1%"
-	if inventory name of player's current inventory contains "&e&lDROP ZE STONE":
-		set {_xps} to yaml value "slots.xp-slot" from file "plugins/sdDrop/gui.yml"
-		set {_clss} to yaml value "slots.close-slot" from file "plugins/sdDrop/gui.yml"
-		set {_cobs} to yaml value "slots.cobble-slot" from file "plugins/sdDrop/gui.yml"
-		set {_ts} to yaml value "slots.turbo-slot" from file "plugins/sdDrop/gui.yml"
-		set {_tos} to yaml value "slots.top-slot" from file "plugins/sdDrop/gui.yml"
-		set {_es} to yaml value "slots.enderchest-slot" from file "plugins/sdDrop/gui.yml"
-		if clicked slot >= 0:
-			cancel event
-			if clicked slot is not {_xps} or {_ts} or {_tos} or {_es} or {_clss} or {_cobs}:
-				set {_ss} to clicked slot
-				if slot {_ss} of player's current inventory is not air:
-					execute player command "/qdrop %{v::%clicked slot%}%"
-			else:
-				if clicked slot is {_clss}:
-					close player's inventory
-				if clicked slot is {_cobs}:
-					if "%clicked type%" contains "right":
-						loop {qds::%player%} times:
-							if player can hold 1 cobblestone:
-								give 1 cobblestone to player
-								remove 1 from {qds::%player%}
-								set slot 34 of player's current inventory to cobblestone named "%{qdk1}%COBBLESTONE: %{qdk2}%%{qd::%player%::cobble}%" with lore "%{qdk1}%Schowek: %{qdk2}%%{qds::%player%}%||||||%{qdk2}%&oNacisnij %{qdk1}%&oPPM %{qdk2}%&oaby zabrac cobble ze schowka||%{qdk2}%&oNacisnij %{qdk1}%&oLPM %{qdk2}%&oaby wlaczycz/wylaczyc cobble"
-					else:
-						execute player command "/qdrop cobble"
-						set slot {_cobs} of player's current inventory to cobblestone named "%{qdk1}%COBBLESTONE: %{qdk2}%%{qd::%player%::cobble}%" with lore "%{qdk1}%Schowek: %{qdk2}%%{qds::%player%}%||||||%{qdk2}%&oNacisnij %{qdk1}%&oPPM %{qdk2}%&oaby zabrac cobble ze schowka||%{qdk2}%&oNacisnij %{qdk1}%&oLPM %{qdk2}%&oaby wlaczycz/wylaczyc cobble"
-				if clicked slot is {_es}:
-					execute player command "/qdrop ender"
-				if clicked slot is {_tos}:
-					execute player command "/qtop"
+    if inventory name of player's current inventory contains "Top wykopanego stone":
+        cancel event
+        if clicked slot is 53:
+            execute player command "qtop %{strona::%player%} +1%"
+    if inventory name of player's current inventory contains "&e&lDROP ZE STONE":
+        set {_xps} to yaml value "slots.xp-slot" from file "plugins/sdDrop/gui.yml"
+        set {_clss} to yaml value "slots.close-slot" from file "plugins/sdDrop/gui.yml"
+        set {_cobs} to yaml value "slots.cobble-slot" from file "plugins/sdDrop/gui.yml"
+        set {_ts} to yaml value "slots.turbo-slot" from file "plugins/sdDrop/gui.yml"
+        set {_tos} to yaml value "slots.top-slot" from file "plugins/sdDrop/gui.yml"
+        set {_es} to yaml value "slots.enderchest-slot" from file "plugins/sdDrop/gui.yml"
+        set {_cobble::*} to yaml list "items.cobble.lore" from file "plugins/sdDrop/gui.yml"
+        if clicked slot >= 0:
+            cancel event
+            if clicked slot is not {_xps} or {_ts} or {_tos} or {_es} or {_clss} or {_cobs}:
+                set {_ss} to clicked slot
+                if slot {_ss} of player's current inventory is not air:
+                    execute player command "/qdrop %{v::%clicked slot%}%"
+            else:
+                if clicked slot is {_clss}:
+                    close player's inventory
+                if clicked slot is {_cobs}:
+                    if "%clicked type%" contains "right":
+                        loop {qds::%player%} times:
+                            if player can hold 1 cobblestone:
+                                give 1 cobblestone to player
+                                remove 1 from {qds::%player%}
+                                set {_nn} to yaml value "items.cobble.name" from file "plugins/sdDrop/gui.yml"
+                                loop {_cobble::*}:
+                                    set {_cobble::%loop-index%} to colored repConf("%loop-value-2%", "cobble", player)
+                                set {_nc} to colored repConf("%{_nn}%", "cobble", player)
+                                set slot {_cobs} of player's current inventory to cobblestone named "%{_nc}%" with lore colored {_cobble::*}
+                    else:
+                        execute player command "/qdrop cobble"
+                        set {_nn} to yaml value "items.cobble.name" from file "plugins/sdDrop/gui.yml"
+                        loop {_cobble::*}:
+                            set {_cobble::%loop-index%} to colored repConf("%loop-value%", "cobble", player)
+                        set {_nc} to colored repConf("%{_nn}%", "cobble", player)
+                        set slot {_cobs} of player's current inventory to cobblestone named "%{_nc}%" with lore colored {_cobble::*}
+                if clicked slot is {_es}:
+                    execute player command "/qdrop ender"
+                if clicked slot is {_tos}:
+                    execute player command "/qtop"
 
 on join:
-	delete {qd::c::%player%}
-	set {_1::*} to yaml nodes "drops" from file "plugins/sdDrop/drops.yml"
-	if {turbolvl::%player%} is not set:
-		set {turbolvl::%player%} to 0
-	if {turbo::%player%} is not set:
-		set {turbo::%player%} to "nie"
-	if {lturbo::%player%} is not set:
-		set {lturbo::%player%} to 0
-	if {qd::%player%::cobble} is not set:
-		set {qd::%player%::cobble} to "NIE"
-	set {qdc::%player%::wiad} to "TAK"
-	loop {_1::*}:
-		if {qd::%player%::%loop-value%} is not set:
-			set {qd::%player%::%loop-value%} to "TAK"
+    delete {qd::c::%player%}
+    set {_1::*} to yaml nodes "drops" from file "plugins/sdDrop/drops.yml"
+    if {turbolvl::%player%} is not set:
+        set {turbolvl::%player%} to 0
+    if {turbo::%player%} is not set:
+        set {turbo::%player%} to "nie"
+    if {lturbo::%player%} is not set:
+        set {lturbo::%player%} to 0
+    if {qd::%player%::cobble} is not set:
+        set {qd::%player%::cobble} to "NIE"
+    set {qdc::%player%::wiad} to "TAK"
+    loop {_1::*}:
+        if {qd::%player%::%loop-value%} is not set:
+            set {qd::%player%::%loop-value%} to "TAK"
 
 on item spawn:
-	loop all players in radius 8 of event-entity:
-		if {qd::c::%loop-player%} is true:
-			cancel event
-			delete {qd::c::%loop-player%}
+    loop all players in radius 8 of event-entity:
+        if {qd::c::%loop-player%} is true:
+            cancel event
+            delete {qd::c::%loop-player%}
 
 on break of any ore:
-	cancel event
-	set event-block to air
+    cancel event
+    set event-block to air
 
-on break of stone:
-	if player's tool is any pickaxe:
-		add 1 to {qdws::%player%}
-		if {qd::%player%::cobble} is "NIE":
-			set {qd::c::%player%} to true
-			if {qds::%player%} is less than 576:
-				add 1 to {qds::%player%}
-		set {_1::*} to yaml nodes "drops" from file "plugins/sdDrop/drops.yml"
-		set {_drop} to random element out of {_1::*}
-		set {_named} to yaml value "drop-named" from file "plugins/sdDrop/config.yml"
-		set {_wiadakt} to yaml value "wiadomosci.aktywne" from file "plugins/sdDrop/config.yml"
-		set {_chatwiad} to yaml value "wiadomosci.chat" from file "plugins/sdDrop/config.yml"
-		set {_abwiad} to yaml value "wiadomosci.actionbar" from file "plugins/sdDrop/config.yml"
-		if {_named} is "true":
-			set {_name} to yaml value "drops.%{_drop}%.nazwa" from file "plugins/sdDrop/drops.yml"
-			set {_drop2} to {d::item::%{_drop}%} named "%colored {_name}%"
-		else:
-			set {_drop2} to {d::item::%{_drop}%}
-		loop {xp} times:
-			give 1 xp to player
-		if {d::for::%{_drop}%} is "tak":
-			set {_f} to level of fortune of the player's tool/50
-		else:
-			set {_f} to 0
-		if {qd::%player%::%{_drop}%} is not "NIE":
-			if y-coordinate of player is bigger or equal to {d::pmin::%{_drop}%}:
-				if y-coordinate of player is less or equal to {d::pmax::%{_drop}%}:
-					set {_mu} to true
-					if {d::upr:%{_drop}%} is not "":
-						set {_spr} to true
-					if {_spr} is true:
-						if player has permission "%{d::upr:%{_drop}%}%":
-							set {_mu} to true
-						else:
-							set {_mu} to false
-					if {_mu} is true:
-						loop {d::narz::%{_drop}%::*}:
-							set {_t} to loop-value parsed as itemtype
-							if player's tool is {_t}:
-								set {_ok1} to true
-						if {_ok1} is true:
-							set {_c} to {d::sz::%{_drop}%} +{_f}
-							if player has permission "qdrop.vip":
-								add 2% to {_c}
-							if {turbo::%player%} is "tak":
-								set {_t} to yaml value "multipliers.%{turbolvl::%player%}%" from file "plugins/sdDrop/config.yml"
-								set {_c} to {_c}*({_t} parsed as number)
-							chance of {_c}:
-								set {_i} to random integer between {d::imin::%{_drop}%} and {d::imax::%{_drop}%}
-								set {_pkt} to random integer between {d::pkt::min::%{_drop}%} and {d::pkt::max::%{_drop}%}
-								if {turbo::%player%} is "tak":
-									set {_i} to {_i}*({_t} parsed as number)
-									set {_pkt} to {_pkt}*({_t} parsed as number)
-								add {_pkt} to {qd::pkt::%player%}
-								if player can hold {_i} of {_drop2}:
-									give player {_i} of {_drop2}
-								else:
-									wait 2 ticks
-									if {d::en::%{_drop}%} is "tak":
-										if player's ender chest can hold {_i} of {d::item::%{_drop}%}:
-											if {qdec::%player%} is not "NIE":
-												add {_i} of {_drop2} to player's ender chest
-											else:
-												drop {_i} of {_drop2} at event-block
-										else:
-											drop {_i} of {_drop2} at event-block
-									else:
-										drop {_i} of {_drop2} at event-block
-								loop {d::xp::%{_drop}%} times:
-									give 1 xp to player
-								set {_wiad} to yaml value "drops.%{_drop}%.wiadomosc" from file "plugins/sdDrop/drops.yml"
-								if {_wiad} is set:
-									if {_wiad} is not "<none>" or "" or " ":
-										replace all "_ILOSC_" in {_wiad} with "%{_i}%"
-										replace all "_PKT_" in {_wiad} with "%{_pkt}%"
-										wait 2 ticks
-										if "%{_wiadakt}%" is "true":
-											if "%{_abwiad}%" is "true":
-												send actionbar from "%{_wiad}%" to player
-											if "%{_chatwiad}%" is "true":
-												send "%{_wiad}%"
-								qdPkt(player)
+on break of stone or andesite or diorite:
+    if player's tool is any pickaxe:
+        add 1 to {qdws::%player%}
+        if {qd::%player%::cobble} is "NIE":
+            set {qd::c::%player%} to true
+            if {qds::%player%} is less than 576:
+                add 1 to {qds::%player%}
+        set {_1::*} to yaml nodes "drops" from file "plugins/sdDrop/drops.yml"
+        set {_drop} to random element out of {_1::*}
+        set {_named} to yaml value "drop-named" from file "plugins/sdDrop/config.yml"
+        set {_wiadakt} to yaml value "wiadomosci.aktywne" from file "plugins/sdDrop/config.yml"
+        set {_chatwiad} to yaml value "wiadomosci.chat" from file "plugins/sdDrop/config.yml"
+        set {_abwiad} to yaml value "wiadomosci.actionbar" from file "plugins/sdDrop/config.yml"
+        if {_named} is "true":
+            set {_name} to yaml value "drops.%{_drop}%.nazwa" from file "plugins/sdDrop/drops.yml"
+            set {_drop2} to {d::item::%{_drop}%} named colored {_name}
+        else:
+            set {_drop2} to {d::item::%{_drop}%}
+        loop {xp} times:
+            give 1 xp to player
+        if {d::for::%{_drop}%} is "tak":
+            set {_f} to level of fortune of the player's tool/50
+        else:
+            set {_f} to 0
+        if {qd::%player%::%{_drop}%} is not "NIE":
+            if y-coordinate of player is bigger or equal to {d::pmin::%{_drop}%}:
+                if y-coordinate of player is less or equal to {d::pmax::%{_drop}%}:
+                    set {_mu} to true
+                    if {d::upr:%{_drop}%} is not "":
+                        set {_spr} to true
+                    if {_spr} is true:
+                        if player has permission "%{d::upr:%{_drop}%}%":
+                            set {_mu} to true
+                        else:
+                            set {_mu} to false
+                    if {_mu} is true:
+                        loop {d::narz::%{_drop}%::*}:
+                            set {_t} to loop-value parsed as itemtype
+                            if player's tool is {_t}:
+                                set {_ok1} to true
+                        if {_ok1} is true:
+                            set {_c} to {d::sz::%{_drop}%} +{_f}
+                            if player has permission "qdrop.vip":
+                                add 2% to {_c}
+                            if {turbo::%player%} is "tak":
+                                set {_t} to yaml value "multipliers.%{turbolvl::%player%}%" from file "plugins/sdDrop/config.yml"
+                                set {_c} to {_c}*({_t} parsed as number)
+                            chance of {_c}:
+                                set {_i} to random integer between {d::imin::%{_drop}%} and {d::imax::%{_drop}%}
+                                set {_pkt} to random integer between {d::pkt::min::%{_drop}%} and {d::pkt::max::%{_drop}%}
+                                if {turbo::%player%} is "tak":
+                                    set {_i} to {_i}*({_t} parsed as number)
+                                    set {_pkt} to {_pkt}*({_t} parsed as number)
+                                add {_pkt} to {qd::pkt::%player%}
+                                if player can hold {_i} of {_drop2}:
+                                    give player {_i} of {_drop2}
+                                else:
+                                    wait 2 ticks
+                                    if {d::en::%{_drop}%} is "tak":
+                                        if player's ender chest can hold {_i} of {d::item::%{_drop}%}:
+                                            if {qdec::%player%} is not "NIE":
+                                                add {_i} of {_drop2} to player's ender chest
+                                            else:
+                                                drop {_i} of {_drop2} at event-block
+                                        else:
+                                            drop {_i} of {_drop2} at event-block
+                                    else:
+                                        drop {_i} of {_drop2} at event-block
+                                loop {d::xp::%{_drop}%} times:
+                                    give 1 xp to player
+                                set {_wiad} to yaml value "drops.%{_drop}%.wiadomosc" from file "plugins/sdDrop/drops.yml"
+                                if {_wiad} is set:
+                                    if {_wiad} is not "<none>" or "" or " ":
+                                        replace all "_ILOSC_" in {_wiad} with "%{_i}%"
+                                        replace all "_PKT_" in {_wiad} with "%{_pkt}%"
+                                        wait 2 ticks
+                                        if "%{_wiadakt}%" is "true":
+                                            if "%{_chatwiad}%" is "true":
+                                                send colored {_wiad}
+                                qdPkt(player)
