@@ -109,7 +109,7 @@ drops:
       min: '0'
       max: '100'
   deski:
-    item: '5'
+    item: 'oak planks'
     szanse: '1.5%'
     nazwa: '&6DREWNO'
     fortuna: 'tak'
@@ -132,7 +132,7 @@ drops:
       min: '0'
       max: '100'
   jablko:
-    item: '260'
+    item: 'apple'
     szanse: '1.2%'
     nazwa: '&cJABLKO'
     fortuna: 'tak'
